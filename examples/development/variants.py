@@ -120,6 +120,9 @@ TOTAL_STEPS_PER_UNIVERSE_DOMAIN_TASK = {
         },
         'Point2DEnv': {
             DEFAULT_KEY: int(5e4),
+        },
+        'Sawyer': {
+            DEFAULT_KEY: int(4e5),
         }
     },
     'dm_control': {
