@@ -1,22 +1,17 @@
+import sys
 import os
 import os.path as osp
 from doodad import mount, mode
 from doodad.launch import launch_api
 
 def command():
-    return """sh /code/install.sh""" #&& run_example_local examples.development \
-    #--algorithm SAC \
-    #--universe gym \
-    #--domain HalfCheetah \
-    #--task v3 \
-    #--exp-name my-sac-experiment-1 \
-    #--checkpoint-frequency 1000  # Save the checkpoint to resume training later\
-    #--log-dir /output"""
+    return """source /code/install.sh"""
 
-def run(run_mode='local', output_mode='local'):
-
+def run(args, run_mode='local', storage_mode='local', dry_run=False):
+    
+    
     local_mount = mount.MountLocal(
-        local_dir="/home/ashwin/Research/uber-robotics/softlearning",
+        local_dir="/home/ashwin/Research/playground/softlearning",
         mount_point='/code',
         output=False
     )
@@ -46,13 +41,13 @@ def run(run_mode='local', output_mode='local'):
 
     results_mount_point = '/root/ray_results'
 
-    if output_mode == 'local':
+    if storage_mode == 'local':
         output_mount = mount.MountLocal(
                 local_dir="/home/ashwin/Research/results/",
                 mount_point=results_mount_point,
                 output=True
             )
-    elif output_mode == 's3':
+    elif storage_mode == 's3':
         output_mount = mount.MountS3(
              s3_path='softlearning_output',
              mount_point=results_mount_point,
@@ -62,17 +57,23 @@ def run(run_mode='local', output_mode='local'):
 
     mounts = [local_mount, local_mount2, output_mount]
 
-    print(mounts)
-    if True:
-        launch_api.run_command(
+
+    kwargs = {
             #command     = "cat /code/secret.txt > /root/ray_results/secret.txt",
-            command     = "source /code/install.sh",
-            cli_args    = "",
-            mode        = launcher,
-            mounts      = mounts,
-            verbose     = True,
-            docker_image = "abhiguptaberk/softlearningashwin:latest"
-        )
+            'command': command(),
+            'cli_args': " ".join(args),
+            'mode': launcher,
+            'mounts': mounts,
+            'verbose': True,
+            'docker_image': 'abhiguptaberk/softlearningashwin:latest'
+    }
+
+    print(kwargs)
+
+    if not dry_run:
+        launch_api.run_command(**kwargs)
 
 if __name__ == '__main__':
-    run('ec2', 's3')
+    assert len(sys.argv) == 3, "Expects environment and experiment name"
+    run(run_mode='local', storage_mode='local', args=sys.argv[1:], dry_run=False)
+    #run('ec2', 's3')

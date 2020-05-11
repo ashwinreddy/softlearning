@@ -446,7 +446,8 @@ def get_variant_spec_base(universe, domain, task, policy, algorithm):
         get_algorithm_params(universe, domain, task),
     )
     variant_spec = {
-        'git_sha': get_git_rev(__file__),
+        # doodad is complaining about this so we're just gonna hardcode a SHA
+        #'git_sha': 'bd1dc29e166aca501af2e58a5057418126a3e435 master', #get_git_rev(__file__),
 
         'environment_params': {
             'training': {
