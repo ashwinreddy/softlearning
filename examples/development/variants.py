@@ -123,7 +123,10 @@ TOTAL_STEPS_PER_UNIVERSE_DOMAIN_TASK = {
         },
         'Sawyer': {
             DEFAULT_KEY: int(4e5),
-        }
+        },
+        'Hand': {
+            DEFAULT_KEY: int(4e5),
+        },
     },
     'dm_control': {
         # BENCHMARKING

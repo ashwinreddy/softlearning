@@ -74,6 +74,6 @@ def run(args, run_mode='local', storage_mode='local', dry_run=False):
         launch_api.run_command(**kwargs)
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 3, "Expects environment and experiment name"
+    assert len(sys.argv) == 4, "Expects domain, environment and experiment name"
     run(run_mode='local', storage_mode='local', args=sys.argv[1:], dry_run=False)
     #run('ec2', 's3')

@@ -119,7 +119,23 @@ MULTIWORLD_ENVIRONMENT_SPECS = (
     {
         'id': 'Sawyer-RetrievePlateSide-v0',
         'entry_point': 'metaworld.envs.mujoco.sawyer_xyz.sawyer_plate_slide_side:SawyerPlateSlideSideEnv'
-    }
+    },
+    {
+        'id': 'Hand-Door-v0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:DoorEnvV0',
+    },
+    {
+        'id': 'Hand-Hammer-v0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:HammerEnvV0',
+    },
+    {
+        'id': 'Hand-Pen-v0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:PenEnvV0',
+    },
+    {
+        'id': 'Hand-Relocate-v0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:RelocateEnvV0',
+    },
 )
 
 MUJOCO_ENVIRONMENTS = tuple(

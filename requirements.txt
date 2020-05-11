@@ -114,3 +114,5 @@ wheel==0.33.6
 wrapt==1.11.2
 zipp==1.0.0
 git+https://github.com/ashwinreddy/metaworld.git@master#egg=metaworld
+#git+https://github.com/ashwinreddy/mj_envs.git@master#egg=mj_envs
+git+https://github.com/aravindr93/mjrl.git@master#egg=mjrl
