@@ -4,8 +4,8 @@ import os.path as osp
 from doodad import mount, mode
 from doodad.launch import launch_api
 
-def command():
-    return """source /code/install.sh"""
+def command(args):
+    return """source /code/install.sh""" + " ".join(args)
 
 def run(args, run_mode='local', storage_mode='local', dry_run=False):
     
@@ -31,7 +31,8 @@ def run(args, run_mode='local', storage_mode='local', dry_run=False):
     elif run_mode == 'ec2':
         launcher = mode.EC2Autoconfig(
              s3_bucket="doodad-ashwin-redone2",
-             s3_log_path='test_doodad/softlearning_test',
+             #s3_log_path='test_doodad/softlearning_test',
+             s3_log_path='softlearning_exps/',
              instance_type='c4.large',
              spot_price=0.03,
              region='us-west-1',
@@ -59,9 +60,9 @@ def run(args, run_mode='local', storage_mode='local', dry_run=False):
 
 
     kwargs = {
-            #command     = "cat /code/secret.txt > /root/ray_results/secret.txt",
-            'command': command(),
-            'cli_args': " ".join(args),
+            #'command': "cat /code/secret.txt > /root/ray_results/secret.txt",
+            'command': command(args),
+            'cli_args': "",
             'mode': launcher,
             'mounts': mounts,
             'verbose': True,
@@ -75,5 +76,8 @@ def run(args, run_mode='local', storage_mode='local', dry_run=False):
 
 if __name__ == '__main__':
     assert len(sys.argv) == 4, "Expects domain, environment and experiment name"
-    run(run_mode='local', storage_mode='local', args=sys.argv[1:], dry_run=False)
+    run(run_mode='ec2',
+        storage_mode='s3',
+        args=sys.argv[1:],
+        dry_run=False)
     #run('ec2', 's3')
