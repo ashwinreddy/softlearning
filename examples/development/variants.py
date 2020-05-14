@@ -123,6 +123,7 @@ TOTAL_STEPS_PER_UNIVERSE_DOMAIN_TASK = {
         },
         'Sawyer': {
             DEFAULT_KEY: int(4e5),
+            'v0': int(4e5),
         },
         'Hand': {
             DEFAULT_KEY: int(4e5),

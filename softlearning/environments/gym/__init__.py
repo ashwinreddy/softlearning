@@ -126,15 +126,15 @@ MULTIWORLD_ENVIRONMENT_SPECS = (
     },
     {
         'id': 'Hand-Hammer-v0',
-        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:HammerEnvV0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.hammer_v0:HammerEnvV0',
     },
     {
         'id': 'Hand-Pen-v0',
-        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:PenEnvV0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.pen_v0:PenEnvV0',
     },
     {
         'id': 'Hand-Relocate-v0',
-        'entry_point': 'mj_envs.hand_manipulation_suite.door_v0:RelocateEnvV0',
+        'entry_point': 'mj_envs.hand_manipulation_suite.relocate_v0:RelocateEnvV0',
     },
 )
 

@@ -3,9 +3,10 @@ import os
 import os.path as osp
 from doodad import mount, mode
 from doodad.launch import launch_api
+import argparse
 
-def command(args):
-    return """source /code/install.sh""" + " ".join(args)
+def command(domain, env, exp_name):
+    return """source /code/install.sh """ + " ".join([domain, env, exp_name])
 
 def run(args, run_mode='local', storage_mode='local', dry_run=False):
     
@@ -61,7 +62,7 @@ def run(args, run_mode='local', storage_mode='local', dry_run=False):
 
     kwargs = {
             #'command': "cat /code/secret.txt > /root/ray_results/secret.txt",
-            'command': command(args),
+            'command': command(args.domain, args.environment, args.exp_name),
             'cli_args': "",
             'mode': launcher,
             'mounts': mounts,
@@ -75,9 +76,20 @@ def run(args, run_mode='local', storage_mode='local', dry_run=False):
         launch_api.run_command(**kwargs)
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 4, "Expects domain, environment and experiment name"
-    run(run_mode='ec2',
-        storage_mode='s3',
-        args=sys.argv[1:],
-        dry_run=False)
-    #run('ec2', 's3')
+    parser = argparse.ArgumentParser(description='Launches softlearning experiments')
+    parser.add_argument('domain')
+    parser.add_argument('environment')
+    parser.add_argument('exp_name')
+
+    parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--run_mode')
+    parser.add_argument('--storage_mode')
+
+    args = parser.parse_args()
+
+    run(
+        run_mode        = args.run_mode,
+        storage_mode    = args.storage_mode,
+        args            = args,
+        dry_run         = args.dry_run
+    )
